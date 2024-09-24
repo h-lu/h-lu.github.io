@@ -1,0 +1,716 @@
+---
+title: "第三周：常用数据结构与算法"
+author: "陆海波 (上海应用技术大学 经济与管理学院)"
+format:
+  html:
+    toc: true
+    number-sections: false
+    highlight-style: github
+    theme: united
+    fontsize: 1.1em
+    linestretch: 1.7
+---
+
+## 一、教学目标
+
+- **理解数组、链表、栈、队列等基本数据结构的概念和实现**
+- **掌握哈希表、树、图的基本原理和应用场景**
+- **熟悉常用排序和搜索算法的实现及优化**
+- **理解时间复杂度和空间复杂度的分析方法**
+- **能够编写和优化算法，解决实际问题**
+- **利用AI辅助工具，提高算法编写和调试效率**
+
+---
+
+## 二、课程内容
+
+### 1. 基本数据结构
+
+#### 1.1 数组（Array）
+
+- **概念**：数组是一种线性表数据结构，用一组连续的内存空间存储相同类型的数据。
+
+- **特点**：
+  - 通过索引访问元素，时间复杂度为 O(1)
+  - 插入和删除操作的时间复杂度为 O(n)
+
+**示例代码：**
+
+```java
+public class ArrayDemo {
+    public static void main(String[] args) {
+        // 定义数组
+        int[] numbers = new int[5];
+        // 初始化数组
+        numbers[0] = 10;
+        numbers[1] = 20;
+        numbers[2] = 30;
+        // 遍历数组
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println("Element at index " + i + ": " + numbers[i]);
+        }
+    }
+}
+```
+
+#### 1.2 链表（Linked List）
+
+- **概念**：链表是由一系列节点（Node）组成的线性数据结构，每个节点包含数据和指向下一个节点的引用。
+
+- **特点**：
+  - 插入和删除操作时间复杂度为 O(1)
+  - 访问元素需要从头开始遍历，时间复杂度为 O(n)
+
+**示例代码：**
+
+```java
+// 定义节点类
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// 定义链表类
+public class LinkedList {
+    Node head;
+
+    // 在链表末尾添加节点
+    public void append(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = new Node(data);
+    }
+
+    // 遍历链表
+    public void printList() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+}
+
+// 测试链表
+public class LinkedListDemo {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(10);
+        list.append(20);
+        list.append(30);
+        list.printList(); // 输出: 10 -> 20 -> 30 -> null
+    }
+}
+```
+
+#### 1.3 栈（Stack）
+
+- **概念**：栈是一种后进先出（LIFO）的数据结构，只允许在一端进行插入和删除操作。
+
+- **特点**：
+  - 常用于实现撤销操作、表达式求值等
+
+**示例代码：**
+
+```java
+import java.util.Stack;
+
+public class StackDemo {
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        // 压栈
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        // 出栈
+        while (!stack.isEmpty()) {
+            System.out.println("Popped element: " + stack.pop());
+        }
+    }
+}
+```
+
+#### 1.4 队列（Queue）
+
+- **概念**：队列是一种先进先出（FIFO）的数据结构，只允许在一端插入（尾部），在另一端删除（头部）。
+
+- **特点**：
+  - 常用于任务调度、缓冲区等
+
+**示例代码：**
+
+```java
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class QueueDemo {
+    public static void main(String[] args) {
+        Queue<Integer> queue = new LinkedList<>();
+        // 入队
+        queue.offer(10);
+        queue.offer(20);
+        queue.offer(30);
+        // 出队
+        while (!queue.isEmpty()) {
+            System.out.println("Polled element: " + queue.poll());
+        }
+    }
+}
+```
+
+### 2. 高级数据结构概念
+
+#### 2.1 哈希表（Hash Table）
+
+- **概念**：通过哈希函数将键映射到表中的位置，以支持快速的插入、删除和查找操作。
+
+- **特点**：
+  - 平均情况下，插入、删除、查找操作的时间复杂度为 O(1)
+  - 可能会有哈希冲突，需要处理
+
+**示例代码：**
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashTableDemo {
+    public static void main(String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        // 插入键值对
+        map.put("apple", 3);
+        map.put("banana", 5);
+        // 查找
+        System.out.println("Apple count: " + map.get("apple"));
+    }
+}
+```
+
+#### 2.2 树（Tree）
+
+- **概念**：树是一种非线性数据结构，由节点和边组成，具有层级关系。
+
+- **二叉树**：每个节点最多有两个子节点，称为左子节点和右子节点。
+
+- **特点**：
+  - 常用于实现查找、排序等操作
+  - 特殊的二叉查找树（BST）可以实现高效的查找、插入和删除操作
+
+**示例代码（简单的二叉树实现）：**
+
+```java
+class TreeNode {
+    int data;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int data) {
+        this.data = data;
+    }
+}
+
+public class BinaryTree {
+    TreeNode root;
+
+    // 插入节点
+    public void insert(int data) {
+        root = insertRec(root, data);
+    }
+
+    private TreeNode insertRec(TreeNode root, int data) {
+        if (root == null) {
+            root = new TreeNode(data);
+            return root;
+        }
+        if (data < root.data)
+            root.left = insertRec(root.left, data);
+        else if (data > root.data)
+            root.right = insertRec(root.right, data);
+        return root;
+    }
+
+    // 中序遍历
+    public void inorder() {
+        inorderRec(root);
+    }
+
+    private void inorderRec(TreeNode root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.data + " ");
+            inorderRec(root.right);
+        }
+    }
+}
+
+// 测试二叉树
+public class BinaryTreeDemo {
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
+        tree.insert(50);
+        tree.insert(30);
+        tree.insert(70);
+        tree.insert(20);
+        tree.insert(40);
+        tree.insert(60);
+        tree.insert(80);
+        // 中序遍历输出
+        tree.inorder(); // 输出: 20 30 40 50 60 70 80
+    }
+}
+```
+
+#### 2.3 图（Graph）
+
+- **概念**：图由顶点（Vertex）和边（Edge）组成，用于描述复杂的网络关系。
+
+- **特点**：
+  - 可以是有向图或无向图
+  - 常用于描述社交网络、交通网络等
+
+**示例代码（图的表示）：**
+
+```java
+// 邻接矩阵表示法
+int[][] adjacencyMatrix = new int[n][n];
+
+// 邻接表表示法
+List<List<Integer>> adjacencyList = new ArrayList<>();
+for (int i = 0; i < n; i++) {
+    adjacencyList.add(new ArrayList<>());
+}
+```
+
+### 3. 常用算法
+
+#### 3.1 排序算法
+
+- **冒泡排序（Bubble Sort）**
+
+  **特点**：简单但效率低，时间复杂度 O(n^2)
+
+  **示例代码：**
+
+  ```java
+  public class BubbleSort {
+      public static void bubbleSort(int[] arr) {
+          int n = arr.length;
+          for (int i = 0; i < n - 1; i++) {
+              for (int j = 0; j < n - i - 1; j++) {
+                  if (arr[j] > arr[j + 1]) {
+                      // 交换
+                      int temp = arr[j];
+                      arr[j] = arr[j + 1];
+                      arr[j + 1] = temp;
+                  }
+              }
+          }
+      }
+
+      public static void main(String[] args) {
+          int[] arr = {64, 34, 25, 12, 22, 11, 90};
+          bubbleSort(arr);
+          System.out.println("Sorted array:");
+          for (int num : arr) {
+              System.out.print(num + " ");
+          }
+      }
+  }
+  ```
+
+- **快速排序（Quick Sort）**
+
+  **特点**：效率高，平均时间复杂度 O(n log n)
+
+  **示例代码：**
+
+  ```java
+  public class QuickSort {
+      public static void quickSort(int[] arr, int low, int high) {
+          if (low < high) {
+              int pi = partition(arr, low, high);
+              quickSort(arr, low, pi - 1);
+              quickSort(arr, pi + 1, high);
+          }
+      }
+
+      private static int partition(int[] arr, int low, int high) {
+          int pivot = arr[high];
+          int i = (low - 1);
+          for (int j = low; j < high; j++) {
+              if (arr[j] < pivot) {
+                  i++;
+                  int temp = arr[i];
+                  arr[i] = arr[j];
+                  arr[j] = temp;
+              }
+          }
+          int temp = arr[i + 1];
+          arr[i + 1] = arr[high];
+          arr[high] = temp;
+          return i + 1;
+      }
+
+      public static void main(String[] args) {
+          int[] arr = {10, 7, 8, 9, 1, 5};
+          int n = arr.length;
+          quickSort(arr, 0, n - 1);
+          System.out.println("Sorted array:");
+          for (int num : arr) {
+              System.out.print(num + " ");
+          }
+      }
+  }
+  ```
+
+#### 3.2 搜索算法
+
+- **线性搜索（Linear Search）**
+
+  **特点**：从头到尾逐个比较，时间复杂度 O(n)
+
+- **二分搜索（Binary Search）**
+
+  **特点**：适用于已排序的数组，时间复杂度 O(log n)
+
+  **示例代码：**
+
+  ```java
+  public class BinarySearch {
+      public static int binarySearch(int[] arr, int target) {
+          int left = 0, right = arr.length - 1;
+          while (left <= right) {
+              int mid = left + (right - left) / 2;
+              if (arr[mid] == target)
+                  return mid;
+              if (arr[mid] < target)
+                  left = mid + 1;
+              else
+                  right = mid - 1;
+          }
+          return -1; // 未找到
+      }
+
+      public static void main(String[] args) {
+          int[] arr = {2, 3, 4, 10, 40};
+          int target = 10;
+          int result = binarySearch(arr, target);
+          if (result == -1)
+              System.out.println("Element not present");
+          else
+              System.out.println("Element found at index " + result);
+      }
+  }
+  ```
+
+### 4. 时间复杂度与空间复杂度分析
+
+#### 4.1 大O表示法
+
+- **时间复杂度**：算法执行所需的时间与输入规模之间的关系
+- **空间复杂度**：算法执行所需的内存空间与输入规模之间的关系
+
+**常见时间复杂度从低到高排列：**
+
+- O(1)：常数时间
+- O(log n)：对数时间
+- O(n)：线性时间
+- O(n log n)
+- O(n^2)
+- O(n^3)
+- O(2^n)
+
+**示例：**
+
+- **遍历数组**：O(n)
+- **嵌套循环**：O(n^2)
+- **二分搜索**：O(log n)
+
+---
+
+## 三、实践环节
+
+### 1. 实现常用数据结构
+
+**练习1**：自己实现一个动态数组（类似于ArrayList），包含以下功能：
+
+- 添加元素
+- 获取元素
+- 删除元素
+- 动态扩容
+
+**提示**：
+
+- 使用数组作为底层存储
+- 当容量不足时，创建一个更大的数组，复制原有元素
+
+**示例代码（部分）**：
+
+```java
+public class MyArrayList<T> {
+    private Object[] elementData;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
+
+    public MyArrayList() {
+        elementData = new Object[DEFAULT_CAPACITY];
+    }
+
+    // 添加元素
+    public void add(T element) {
+        // 判断是否需要扩容
+        // 省略实现
+    }
+
+    // 获取元素
+    public T get(int index) {
+        // 省略实现
+    }
+
+    // 删除元素
+    public void remove(int index) {
+        // 省略实现
+    }
+
+    // 其他方法
+}
+```
+
+### 2. 编写算法解决实际问题
+
+**练习2**：实现斐波那契数列的递归和非递归版本，并比较两者的性能。
+
+**提示**：
+
+- **递归版本**：
+
+  ```java
+  public static int fibRecursive(int n) {
+      if (n <= 1)
+          return n;
+      else
+          return fibRecursive(n - 1) + fibRecursive(n - 2);
+  }
+  ```
+
+- **非递归版本**：
+
+  ```java
+  public static int fibIterative(int n) {
+      if (n <= 1)
+          return n;
+      int a = 0, b = 1, sum = 0;
+      for (int i = 2; i <= n; i++) {
+          sum = a + b;
+          a = b;
+          b = sum;
+      }
+      return sum;
+  }
+  ```
+
+- **比较性能**：使用`System.currentTimeMillis()`或`System.nanoTime()`测量执行时间
+
+### 3. 利用AI辅助工具优化算法
+
+**练习3**：利用AI辅助工具，优化快速排序算法，处理重复元素，并提高效率。
+
+**步骤**：
+
+1. **分析现有代码**：了解标准快速排序的实现及其不足之处。
+
+2. **使用AI工具**：辅助生成优化后的代码，例如采用三向切分快速排序，处理重复元素。
+
+3. **测试和比较**：对比优化前后的算法性能。
+
+**优化后的示例代码（部分）**：
+
+```java
+public class QuickSortOptimized {
+    public static void quickSort3Way(int[] arr, int low, int high) {
+        if (low >= high) return;
+        int lt = low, i = low + 1, gt = high;
+        int pivot = arr[low];
+        while (i <= gt) {
+            if (arr[i] < pivot) {
+                swap(arr, lt++, i++);
+            } else if (arr[i] > pivot) {
+                swap(arr, i, gt--);
+            } else {
+                i++;
+            }
+        }
+        quickSort3Way(arr, low, lt - 1);
+        quickSort3Way(arr, gt + 1, high);
+    }
+
+    // 交换方法
+    private static void swap(int[] arr, int i, int j) {
+        // 省略实现
+    }
+
+    // 测试主函数
+    public static void main(String[] args) {
+        // 省略实现
+    }
+}
+```
+
+---
+
+## 四、综合练习: 智能图书管理系统
+
+设计一个图书管理系统，使用多种数据结构来存储和管理图书信息，并集成简单的AI功能来提供图书推荐。
+
+### 要求
+
+1. 使用 `ArrayList` 存储所有图书对象。
+
+2. 实现一个基于二叉搜索树的索引，用于快速查找图书。
+
+3. 使用 `HashMap` 存储图书类别和对应的图书列表。
+
+4. 实现一个基于优先队列的借阅等待列表。
+
+5. 使用栈来记录用户的浏览历史。
+
+6. 实现一个简单的推荐系统，基于用户的浏览历史和借阅记录推荐图书。
+
+### 主要类和方法
+
+1. `Book` 类：包含图书的基本信息（如标题、作者、ISBN等）。
+
+2. `Library` 类：管理整个图书系统。
+
+3. `BinarySearchTree` 类：实现二叉搜索树用于图书索引。
+
+4. `AIRecommendation` 类：实现简单的图书推荐算法。
+
+### 示例代码结构
+
+```java
+import java.util.*;
+
+class Book {
+    // 图书属性和方法
+}
+
+class Library {
+    private ArrayList<Book> books;
+    private BinarySearchTree bst;
+    private HashMap<String, ArrayList<Book>> categoryMap;
+    private PriorityQueue<Book> waitingList;
+    private AIRecommendation aiRecommender;
+
+    // 图书管理方法
+}
+
+class BinarySearchTree {
+    // 二叉搜索树实现
+}
+
+class AIRecommendation {
+    public List<Book> recommendBooks(Stack<Book> browsingHistory, List<Book> borrowedBooks) {
+        // 简单的推荐算法实现
+    }
+}
+
+public class LibraryManagementSystem {
+    public static void main(String[] args) {
+        // 主程序
+    }
+}
+```
+
+这个练习涵盖了多种数据结构（ArrayList、二叉搜索树、HashMap、优先队列、栈）的使用。学生可以通过实现这个系统来深入理解各种数据结构的特点和应用场景。
+
+对于AI辅助编程部分，可以：
+
+1. 使用AI工具生成基本的类结构和方法。
+2. 请求AI解释特定数据结构的实现细节。
+3. 使用AI帮助优化代码和提供性能建议。
+4. 探索如何使用更高级的机器学习算法来改进推荐系统。
+
+---
+
+## 五、练习与作业
+
+### 1. 实现排序算法
+
+- **要求**：实现以下排序算法，并比较它们的性能
+
+  - 冒泡排序
+  - 选择排序
+  - 插入排序
+  - 快速排序
+  - 归并排序
+
+- **任务**：
+
+  - 对随机生成的数组进行排序
+  - 测量每种算法的执行时间，分析性能差异
+
+### 2. 实现图的基本操作
+
+- **要求**：
+
+  - 定义图的数据结构（使用邻接表）
+  - 实现深度优先搜索（DFS）和广度优先搜索（BFS）算法
+
+- **任务**：
+
+  - 在图中查找指定节点
+  - 输出遍历顺序
+
+### 3. 设计数据结构应用场景
+
+- **任务**：
+
+  - 根据实际问题，选择合适的数据结构进行建模
+  - 例如，实现一个任务调度系统，使用优先队列管理任务
+
+---
+
+## 六、课堂讨论
+
+- **不同数据结构的优势和适用场景是什么？**
+- **如何选择合适的算法解决实际问题？**
+- **时间复杂度和空间复杂度对算法性能有何影响？**
+
+---
+
+## 七、学习建议
+
+- **理解原理**：不仅要会使用数据结构和算法，还要理解其内部原理
+
+- **多练习**：通过编写代码，加深对数据结构和算法的理解
+
+- **分析性能**：在实践中关注算法的时间和空间复杂度，优化代码
+
+- **利用AI工具**：在学习和编程中，善于利用AI辅助工具，提高效率
+
+---
+
+## 八、预习与准备
+
+- **预习下周内容**：异常处理与调试技巧
+
+- **思考问题**：
+
+  - 什么是异常？异常处理有什么作用？
+
+  - 如何使用调试工具定位和解决代码中的问题？
+
+---
+
+**备注**：本周内容重点在于掌握常用数据结构和算法，为后续更复杂的编程任务打下坚实的基础。通过综合练习，锻炼解决实际问题的能力。

@@ -1,0 +1,585 @@
+---
+title: "第二周：Java基础语法与面向对象编程"
+author: "陆海波 (上海应用技术大学 经济与管理学院)"
+format:
+  html:
+    toc: true
+    number-sections: false
+    highlight-style: github
+    theme: united
+    fontsize: 1.1em
+    linestretch: 1.7
+---
+
+## 一、教学目标
+
+- **理解Java的基本数据类型和运算符**
+- **掌握控制流语句的使用方法**
+- **理解类与对象的概念**
+- **掌握面向对象编程的三大特性：封装、继承、多态**
+- **能够编写简单的Java程序，运用面向对象思想解决问题**
+- **利用AI辅助工具，提高代码编写和学习效率**
+
+---
+
+## 二、课程内容
+
+### 1. Java基本数据类型与运算符
+
+#### 1.1 基本数据类型
+
+Java共有8种基本数据类型，分为四类：
+
+- **整数类型**：`byte`（1字节）、`short`（2字节）、`int`（4字节）、`long`（8字节）
+- **浮点数类型**：`float`（4字节）、`double`（8字节）
+- **字符类型**：`char`（2字节，采用Unicode编码）
+- **布尔类型**：`boolean`（1字节，`true`或`false`）
+
+**示例代码：**
+
+```java
+public class DataTypeDemo {
+    public static void main(String[] args) {
+        byte b = 100;
+        short s = 20000;
+        int i = 300000;
+        long l = 4000000000L;
+
+        float f = 3.14F;
+        double d = 3.1415926;
+
+        char c = 'A';
+        boolean bool = true;
+
+        System.out.println("byte: " + b);
+        System.out.println("short: " + s);
+        System.out.println("int: " + i);
+        System.out.println("long: " + l);
+        System.out.println("float: " + f);
+        System.out.println("double: " + d);
+        System.out.println("char: " + c);
+        System.out.println("boolean: " + bool);
+    }
+}
+```
+
+#### 1.2 运算符
+
+- **算术运算符**：`+`、`-`、`*`、`/`、`%`、`++`、`--`
+- **关系运算符**：`==`、`!=`、`>`、`<`、`>=`、`<=`
+- **逻辑运算符**：`&&`、`||`、`!`
+- **位运算符**：`&`、`|`、`^`、`~`、`<<`、`>>`、`>>>`
+- **赋值运算符**：`=`、`+=`、`-=`、`*=`、`/=`、`%=` 等
+- **三元运算符**：`condition ? expr1 : expr2`
+
+**示例代码：**
+
+```java
+public class OperatorDemo {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 20;
+
+        // 算术运算
+        int sum = a + b;
+        int diff = a - b;
+        int product = a * b;
+        int quotient = b / a;
+        int remainder = b % a;
+
+        // 关系运算
+        boolean isEqual = (a == b);
+        boolean isGreater = (a > b);
+
+        // 逻辑运算
+        boolean result = (a > 5) && (b < 30);
+
+        // 三元运算
+        int max = (a > b) ? a : b;
+
+        System.out.println("sum: " + sum);
+        System.out.println("isEqual: " + isEqual);
+        System.out.println("result: " + result);
+        System.out.println("max: " + max);
+    }
+}
+```
+
+### 2. 控制流语句
+
+#### 2.1 条件语句
+
+- **`if`语句**
+- **`if...else`语句**
+- **`if...else if...else`语句**
+- **`switch`语句**
+
+**示例代码：**
+
+```java
+public class ConditionDemo {
+    public static void main(String[] args) {
+        int score = 85;
+
+        // if...else if...else 语句
+        if (score >= 90) {
+            System.out.println("优秀");
+        } else if (score >= 80) {
+            System.out.println("良好");
+        } else if (score >= 70) {
+            System.out.println("中等");
+        } else if (score >= 60) {
+            System.out.println("及格");
+        } else {
+            System.out.println("不及格");
+        }
+
+        // switch 语句
+        int day = 3;
+        switch (day) {
+            case 1:
+                System.out.println("星期一");
+                break;
+            case 2:
+                System.out.println("星期二");
+                break;
+            case 3:
+                System.out.println("星期三");
+                break;
+            default:
+                System.out.println("其他");
+                break;
+        }
+    }
+}
+```
+
+#### 2.2 循环语句
+
+- **`for`循环**
+- **`while`循环**
+- **`do...while`循环**
+- **循环控制语句**：`break`、`continue`
+
+**示例代码：**
+
+```java
+public class LoopDemo {
+    public static void main(String[] args) {
+        // for 循环
+        for (int i = 0; i < 5; i++) {
+            System.out.println("i = " + i);
+        }
+
+        // while 循环
+        int j = 0;
+        while (j < 5) {
+            System.out.println("j = " + j);
+            j++;
+        }
+
+        // do...while 循环
+        int k = 0;
+        do {
+            System.out.println("k = " + k);
+            k++;
+        } while (k < 5);
+
+        // break 和 continue
+        for (int m = 0; m < 10; m++) {
+            if (m == 5) {
+                break; // 跳出循环
+            }
+            if (m % 2 == 0) {
+                continue; // 跳过本次循环
+            }
+            System.out.println("m = " + m);
+        }
+    }
+}
+```
+
+### 3. 类与对象的概念
+
+#### 3.1 类与对象
+
+- **类（Class）**：是对一类事物的抽象，包含属性和方法。
+- **对象（Object）**：类的实例，通过`new`关键字创建。
+
+**示例代码：**
+
+```java
+public class Person {
+    // 属性
+    String name;
+    int age;
+
+    // 方法
+    public void speak() {
+        System.out.println("我叫 " + name + "，今年 " + age + " 岁。");
+    }
+}
+
+public class PersonTest {
+    public static void main(String[] args) {
+        // 创建对象
+        Person p = new Person();
+        p.name = "张三";
+        p.age = 20;
+        p.speak();
+    }
+}
+```
+
+### 4. 面向对象编程的三大特性
+
+#### 4.1 封装（Encapsulation）
+
+- **概念**：将数据和操作数据的方法封装在一起，对外提供公共的访问方式，隐藏内部实现细节。
+
+**示例代码：**
+
+```java
+public class Student {
+    // 私有属性
+    private String name;
+    private int score;
+
+    // 公共方法（Getter 和 Setter）
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name; // this 关键字指代当前对象
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        if (score >= 0 && score <= 100) {
+            this.score = score;
+        } else {
+            System.out.println("分数无效！");
+        }
+    }
+}
+```
+
+#### 4.2 继承（Inheritance）
+
+- **概念**：子类继承父类的属性和方法，增强代码的复用性。
+
+**示例代码：**
+
+```java
+// 父类
+public class Animal {
+    public void eat() {
+        System.out.println("动物会吃东西");
+    }
+}
+
+// 子类
+public class Dog extends Animal {
+    public void bark() {
+        System.out.println("狗会汪汪叫");
+    }
+}
+
+public class InheritanceDemo {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.eat(); // 继承自父类的方法
+        dog.bark();
+    }
+}
+```
+
+#### 4.3 多态（Polymorphism）
+
+- **概念**：同一个对象在不同的情况下表现出不同的形态，主要通过方法的重载和重写实现。
+
+**示例代码：**
+
+- **方法重载（Overloading）**：同一类中，方法名相同，参数列表不同。
+
+```java
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // 重载方法
+    public double add(double a, double b) {
+        return a + b;
+    }
+}
+
+public class OverloadingDemo {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println(calc.add(2, 3));         // 调用第一个 add 方法
+        System.out.println(calc.add(2.5, 3.5));     // 调用第二个 add 方法
+    }
+}
+```
+
+- **方法重写（Overriding）**：子类重写父类的方法，方法签名相同，返回类型相同。
+
+```java
+public class Animal {
+    public void makeSound() {
+        System.out.println("动物发出声音");
+    }
+}
+
+public class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("猫咪喵喵叫");
+    }
+}
+
+public class PolymorphismDemo {
+    public static void main(String[] args) {
+        Animal animal = new Cat(); // 向上转型
+        animal.makeSound(); // 调用的是 Cat 类的 makeSound 方法
+    }
+}
+```
+
+---
+
+## 三、实践环节
+
+### 1. 编写基本的Java程序
+
+**练习1**：编写一个程序，输入一个整数，判断它是奇数还是偶数。
+
+**示例代码：**
+
+```java
+import java.util.Scanner;
+
+public class OddEven {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("请输入一个整数：");
+        int number = scanner.nextInt();
+
+        if (number % 2 == 0) {
+            System.out.println(number + " 是偶数。");
+        } else {
+            System.out.println(number + " 是奇数。");
+        }
+    }
+}
+```
+
+### 2. 实现简单的面向对象模型
+
+**练习2**：设计一个`BankAccount`类，包含账户余额，提供存款和取款的方法，并对余额进行封装。
+
+**要求：**
+
+- 余额属性设为私有
+- 提供`deposit(double amount)`方法存款
+- 提供`withdraw(double amount)`方法取款，余额不足时提示
+- 提供`getBalance()`方法查询余额
+
+**示例代码：**
+
+```java
+public class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("存款成功，当前余额：" + balance);
+        } else {
+            System.out.println("存款金额必须大于0！");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("余额不足，取款失败！");
+        } else if (amount <= 0) {
+            System.out.println("取款金额必须大于0！");
+        } else {
+            balance -= amount;
+            System.out.println("取款成功，当前余额：" + balance);
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+
+public class BankAccountTest {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount(1000);
+        account.deposit(500);
+        account.withdraw(200);
+        System.out.println("最终余额：" + account.getBalance());
+    }
+}
+```
+
+### 3. 使用AI辅助工具加速代码编写
+
+**练习3**：利用AI辅助工具，自动生成类和方法的模板，实现一个简单的学生管理系统，包括添加学生、删除学生、查询学生信息等功能。
+
+**步骤：**
+
+1. **设计类结构**：`Student`类包含`id`、`name`、`age`属性；`StudentManager`类负责管理学生信息。
+
+2. **使用AI工具**：自动生成`Student`和`StudentManager`类的基本代码结构。
+
+3. **完善功能**：实现添加、删除、查询的方法，并进行测试。
+
+**示例代码：**
+
+```java
+// Student.java
+public class Student {
+    private int id;
+    private String name;
+    private int age;
+
+    // 构造方法、Getter 和 Setter 方法
+    // 省略，使用AI工具自动生成
+}
+
+// StudentManager.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentManager {
+    private List<Student> studentList = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        studentList.add(student);
+        System.out.println("添加学生：" + student.getName());
+    }
+
+    public void removeStudent(int id) {
+        studentList.removeIf(s -> s.getId() == id);
+        System.out.println("删除学生ID：" + id);
+    }
+
+    public Student findStudent(int id) {
+        for (Student s : studentList) {
+            if (s.getId() == id) {
+                return s;
+            }
+        }
+        System.out.println("未找到学生ID：" + id);
+        return null;
+    }
+
+    public void showAllStudents() {
+        for (Student s : studentList) {
+            System.out.println("ID: " + s.getId() + ", Name: " + s.getName() + ", Age: " + s.getAge());
+        }
+    }
+}
+
+// StudentManagerTest.java
+public class StudentManagerTest {
+    public static void main(String[] args) {
+        StudentManager manager = new StudentManager();
+
+        // 创建学生对象，使用AI工具生成代码
+        Student s1 = new Student(1, "张三", 20);
+        Student s2 = new Student(2, "李四", 22);
+
+        manager.addStudent(s1);
+        manager.addStudent(s2);
+
+        manager.showAllStudents();
+
+        manager.removeStudent(1);
+        manager.showAllStudents();
+
+        Student s = manager.findStudent(2);
+        if (s != null) {
+            System.out.println("查询结果：ID: " + s.getId() + ", Name: " + s.getName());
+        }
+    }
+}
+```
+
+---
+
+## 四、练习与作业
+
+### 1. 编写一个计算器程序
+
+- **要求**：实现加、减、乘、除功能，支持用户输入两个数字和操作符，输出计算结果。
+- **提示**：使用`switch`语句处理不同的操作符。
+
+**示例代码（部分）**：
+
+```java
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        // 代码实现
+    }
+}
+```
+
+### 2. 设计一个动物类继承体系
+
+- **要求**：
+  - 定义一个`Animal`父类，包含`eat()`方法。
+  - 定义`Dog`和`Cat`子类，重写`eat()`方法，分别输出不同的信息。
+  - 在主函数中，创建`Animal`类型的对象，分别指向`Dog`和`Cat`实例，调用`eat()`方法，体会多态性。
+
+### 3. 实现商品管理系统
+
+- **要求**：
+  - 定义`Product`类，包含`id`、`name`、`price`属性。
+  - 定义`ProductManager`类，提供添加商品、删除商品、查询商品的方法。
+  - 在主程序中，测试商品管理功能。
+
+---
+
+## 五、课堂讨论
+
+- **面向对象编程的优势是什么？**
+- **封装、继承、多态如何提高代码的可维护性和复用性？**
+- **在实际开发中，如何合理使用面向对象的特性？**
+
+---
+
+## 六、学习建议
+
+- **多练习**：编程需要大量的实践，完成课后练习，加深理解。
+- **善于总结**：学习完每个知识点后，自己总结一遍，加深记忆。
+- **利用资源**：善用AI辅助工具，提高学习效率，但也要注重原理的理解。
+- **代码规范**：养成良好的编码习惯，遵循代码规范，编写可读性高的代码。
+
+---
+
+## 七、预习与准备
+
+- **预习下周内容**：数组和集合框架的使用。
+- **思考问题**：
+  - 什么是数组？数组有哪些特点和局限性？
+  - 集合框架解决了数组的哪些问题？
+
+---
+
+**备注**：本周内容重点在于掌握Java的基础语法和面向对象编程的核心概念，为后续深入学习打下坚实的基础。通过实践和练习，培养编程思维，逐步提高编码能力。

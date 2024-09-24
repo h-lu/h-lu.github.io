@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="陆海波 (上海应用技术大学 经济与管理学院)">
+<meta name="dcterms.date" content="2024-09-03">
+
+<title>Java 程序设计</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Java 程序设计</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>陆海波 (上海应用技术大学 经济与管理学院) </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 3, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="课程概述" class="level2">
+<h2 class="anchored" data-anchor-id="课程概述">课程概述</h2>
+<p>本课程旨在培养学生Java编程技能和实践能力。课程内容紧密结合行业需求，注重实用性和项目经验，涵盖Java基础、数据结构与算法、数据库、网络编程、前后端开发、Spring Boot框架等。同时，课程融合AI辅助编程技术，帮助学生加速学习，提高编程效率和代码质量。通过项目驱动教学，培养学生的编程能力、团队协作和问题解决能力。</p>
+</section>
+<section id="教学目标" class="level2">
+<h2 class="anchored" data-anchor-id="教学目标">教学目标</h2>
+<ul>
+<li><strong>掌握Java语言的核心语法和面向对象编程思想</strong></li>
+<li><strong>熟悉常用的数据结构与算法，提升编程效率</strong></li>
+<li><strong>具备数据库设计和操作能力，理解SQL和NoSQL</strong></li>
+<li><strong>掌握网络编程技术，能够开发高性能的网络应用</strong></li>
+<li><strong>熟练使用Spring Boot框架，具备构建微服务的能力</strong></li>
+<li><strong>了解前端技术，与后端进行高效交互</strong></li>
+<li><strong>培养代码规范和工程化开发能力</strong></li>
+<li><strong>熟悉AI辅助编程工具的使用，提高学习效率</strong></li>
+<li><strong>具备团队协作和敏捷开发的实践经验</strong></li>
+</ul>
+</section>
+<section id="课程安排" class="level2">
+<h2 class="anchored" data-anchor-id="课程安排">课程安排</h2>
+<section id="第1周课程导论与开发环境" class="level3">
+<h3 class="anchored" data-anchor-id="第1周课程导论与开发环境"><a href="lecture1.html">第1周：课程导论与开发环境</a></h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>课程介绍与学习方法指导</li>
+<li>Java开发环境配置（JDK、IDE）</li>
+<li>代码规范与编码风格</li>
+<li>AI辅助编程工具的介绍与安装</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>搭建开发环境，熟悉IDE</li>
+<li>体验AI辅助编程工具，提高代码编写效率</li>
+</ul></li>
+</ul>
+</section>
+<section id="第2周java基础语法与面向对象编程" class="level3">
+<h3 class="anchored" data-anchor-id="第2周java基础语法与面向对象编程"><a href="lecture2.html">第2周：Java基础语法与面向对象编程</a></h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>基本数据类型与运算符</li>
+<li>控制流语句</li>
+<li>类与对象的概念</li>
+<li>封装、继承、多态</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>编写基本的Java程序</li>
+<li>实现简单的面向对象模型</li>
+<li>使用AI工具自动生成类和方法的模板，加速代码编写</li>
+</ul></li>
+</ul>
+</section>
+<section id="第3周常用数据结构与算法" class="level3">
+<h3 class="anchored" data-anchor-id="第3周常用数据结构与算法"><a href="lecture3.html">第3周：常用数据结构与算法</a></h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>数组、链表、栈、队列</li>
+<li>哈希表、树、图的基本概念</li>
+<li>常用排序和搜索算法</li>
+<li>时间复杂度与空间复杂度分析</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>实现常用数据结构</li>
+<li>编写算法解决实际问题</li>
+<li>利用AI辅助调试和优化算法，提高代码性能</li>
+</ul></li>
+</ul>
+</section>
+<section id="第4周异常处理与调试技巧" class="level3">
+<h3 class="anchored" data-anchor-id="第4周异常处理与调试技巧"><a href="lecture4.html">第4周：异常处理与调试技巧</a></h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>异常的分类与处理机制</li>
+<li>自定义异常</li>
+<li>调试工具的使用</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>编写健壮的代码，完善异常处理</li>
+<li>使用调试工具定位和解决问题</li>
+<li>利用AI工具自动检测代码中的潜在错误</li>
+</ul></li>
+</ul>
+</section>
+<section id="第5周多线程与并发编程" class="level3">
+<h3 class="anchored" data-anchor-id="第5周多线程与并发编程">第5周：多线程与并发编程</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>线程的创建与管理</li>
+<li>同步机制与线程安全</li>
+<li>并发容器与原子操作</li>
+<li>高并发下的性能优化</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>开发多线程应用程序</li>
+<li>解决线程安全问题</li>
+<li>使用AI辅助分析并发问题，优化线程性能</li>
+</ul></li>
+</ul>
+</section>
+<section id="第6周io操作与序列化" class="level3">
+<h3 class="anchored" data-anchor-id="第6周io操作与序列化">第6周：I/O操作与序列化</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>输入输出流的使用</li>
+<li>NIO与异步I/O</li>
+<li>对象序列化与反序列化</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>实现文件读写和网络数据传输</li>
+<li>优化I/O性能</li>
+<li>利用AI工具生成I/O处理代码，提高开发效率</li>
+</ul></li>
+</ul>
+</section>
+<section id="第7周数据库基础与jdbc编程" class="level3">
+<h3 class="anchored" data-anchor-id="第7周数据库基础与jdbc编程">第7周：数据库基础与JDBC编程</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>关系型数据库概述</li>
+<li>SQL语句（增删改查）</li>
+<li>JDBC连接与事务管理</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>设计并创建数据库</li>
+<li>使用JDBC操作数据库</li>
+<li>使用AI辅助生成SQL语句，避免常见错误</li>
+</ul></li>
+</ul>
+</section>
+<section id="第8周orm框架与mybatis" class="level3">
+<h3 class="anchored" data-anchor-id="第8周orm框架与mybatis">第8周：ORM框架与MyBatis</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>ORM思想与优势</li>
+<li>MyBatis框架的使用</li>
+<li>动态SQL与缓存机制</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>集成MyBatis，实现数据持久化</li>
+<li>优化数据库访问性能</li>
+<li>利用AI工具生成MyBatis配置，提高开发速度</li>
+</ul></li>
+</ul>
+</section>
+<section id="第9周web开发基础与servlet" class="level3">
+<h3 class="anchored" data-anchor-id="第9周web开发基础与servlet">第9周：Web开发基础与Servlet</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>HTTP协议与请求响应机制</li>
+<li>Servlet的工作原理</li>
+<li>会话管理（Cookie、Session）</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>开发简单的Web应用</li>
+<li>实现用户登录和会话管理</li>
+<li>使用AI辅助生成Servlet代码，提升编码效率</li>
+</ul></li>
+</ul>
+</section>
+<section id="第10周前端技术与交互" class="level3">
+<h3 class="anchored" data-anchor-id="第10周前端技术与交互">第10周：前端技术与交互</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>HTML、CSS、JavaScript基础</li>
+<li>前后端分离架构</li>
+<li>Ajax与异步通信</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>开发交互式前端页面</li>
+<li>与后端API进行数据交互</li>
+<li>利用AI工具生成前端代码，加快开发进度</li>
+</ul></li>
+</ul>
+</section>
+<section id="第11周spring核心与spring-boot入门" class="level3">
+<h3 class="anchored" data-anchor-id="第11周spring核心与spring-boot入门">第11周：Spring核心与Spring Boot入门</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>Spring框架概述与IOC容器</li>
+<li>依赖注入与面向切面编程（AOP）</li>
+<li>Spring Boot的自动配置与快速启动</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>搭建Spring Boot项目</li>
+<li>实现基础的业务逻辑</li>
+<li>使用AI辅助配置Spring Boot项目，减少配置错误</li>
+</ul></li>
+</ul>
+</section>
+<section id="第12周spring-mvc与restful-api" class="level3">
+<h3 class="anchored" data-anchor-id="第12周spring-mvc与restful-api">第12周：Spring MVC与RESTful API</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>MVC设计模式</li>
+<li>Spring MVC的请求处理流程</li>
+<li>构建RESTful API接口</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>开发RESTful风格的Web服务</li>
+<li>与前端进行数据交互</li>
+<li>利用AI工具生成控制器和API接口，提高开发效率</li>
+</ul></li>
+</ul>
+</section>
+<section id="第13周spring-boot高级应用" class="level3">
+<h3 class="anchored" data-anchor-id="第13周spring-boot高级应用">第13周：Spring Boot高级应用</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>集成MyBatis或JPA实现数据持久化</li>
+<li>安全框架的使用</li>
+<li>配置管理与多环境支持</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>实现完整的后端服务</li>
+<li>增加安全认证和权限控制</li>
+<li>使用AI辅助配置安全框架，确保系统安全</li>
+</ul></li>
+</ul>
+</section>
+<section id="第14周微服务架构与分布式系统" class="level3">
+<h3 class="anchored" data-anchor-id="第14周微服务架构与分布式系统">第14周：微服务架构与分布式系统</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>微服务的概念与优势</li>
+<li>服务注册与发现、配置中心</li>
+<li>分布式事务与容错机制</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>构建简单的微服务应用</li>
+<li>实现服务间的通信</li>
+<li>利用AI工具辅助微服务的设计与部署</li>
+</ul></li>
+</ul>
+</section>
+<section id="第15周项目开发与devops实践" class="level3">
+<h3 class="anchored" data-anchor-id="第15周项目开发与devops实践">第15周：项目开发与DevOps实践</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>项目需求分析与设计</li>
+<li>持续集成与持续部署（CI/CD）</li>
+<li>测试驱动开发（TDD）与单元测试</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>团队协作开发项目</li>
+<li>使用工具实现自动化构建与部署</li>
+<li>使用AI辅助编写测试用例，提高测试覆盖率</li>
+</ul></li>
+</ul>
+</section>
+<section id="第16周项目答辩与课程总结" class="level3">
+<h3 class="anchored" data-anchor-id="第16周项目答辩与课程总结">第16周：项目答辩与课程总结</h3>
+<ul>
+<li><strong>内容</strong>：
+<ul>
+<li>项目展示与评审</li>
+<li>代码质量与性能优化</li>
+<li>职业发展与面试技巧</li>
+</ul></li>
+<li><strong>实践</strong>：
+<ul>
+<li>完成项目报告与源码提交</li>
+<li>模拟技术面试，分享求职经验</li>
+<li>利用AI工具进行代码审查和性能分析，优化项目</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="教学资源" class="level2">
+<h2 class="anchored" data-anchor-id="教学资源">教学资源</h2>
+<ul>
+<li><strong>教材推荐</strong>：
+<ul>
+<li>《Effective Java》（中文版）</li>
+<li>《Spring实战（第5版）》</li>
+<li>《Java并发编程实战》</li>
+</ul></li>
+<li><strong>软件工具</strong>：
+<ul>
+<li>开发工具：Cursor</li>
+<li>版本控制：Git</li>
+<li>构建工具：Maven、Gradle</li>
+<li>数据库：MySQL、Redis</li>
+<li>容器化：Docker</li>
+<li><strong>AI辅助编程工具</strong></li>
+</ul></li>
+<li><strong>在线资源</strong>：
+<ul>
+<li>官方文档（Java、Spring等）</li>
+<li>技术博客与社区</li>
+<li>在线学习平台与课程</li>
+</ul></li>
+</ul>
+</section>
+<section id="考核方式" class="level2">
+<h2 class="anchored" data-anchor-id="考核方式">考核方式</h2>
+<ul>
+<li><strong>平时成绩（50%）</strong>：
+<ul>
+<li>出勤 （10%）</li>
+<li>课堂参与与讨论（10%）</li>
+<li>作业与实验报告（30%）</li>
+</ul></li>
+<li><strong>项目成绩（50%）</strong>：
+<ul>
+<li>项目完成度与质量（30%）</li>
+<li>团队协作与贡献度（10%）</li>
+<li>项目答辩与演示（10%）</li>
+</ul></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

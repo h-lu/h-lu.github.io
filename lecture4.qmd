@@ -1,0 +1,749 @@
+---
+title: "第四周：异常处理与调试技巧"
+author: "陆海波 (上海应用技术大学 经济与管理学院)"
+format:
+  html:
+    toc: true
+    number-sections: false
+    highlight-style: github
+    theme: united
+    fontsize: 1.1em
+    linestretch: 1.7
+---
+
+
+## 一、教学目标
+
+- **理解异常的概念和分类，掌握异常处理机制**
+- **能够编写健壮的代码，正确处理可能出现的异常**
+- **掌握自定义异常的创建和使用方法**
+- **熟悉Java调试工具的使用，掌握常见的调试技巧**
+- **利用AI辅助工具，提高代码调试和问题解决效率**
+
+---
+
+## 二、课程内容
+
+### 1. 异常的概念和作用
+
+#### 1.1 什么是异常
+
+- **定义**：异常是程序运行过程中发生的非正常情况，可能导致程序的中断。
+- **作用**：通过异常处理机制，可以捕获并处理异常，防止程序崩溃，提高程序的健壮性。
+
+#### 1.2 异常的分类
+
+- **检查异常（Checked Exception）**：
+  - 编译时异常，必须被捕获或声明抛出，否则编译不通过。
+  - 例如：`IOException`、`SQLException`。
+  
+- **运行时异常（Unchecked Exception）**：
+  - 运行时异常，编译器不强制要求处理。
+  - 例如：`NullPointerException`、`ArrayIndexOutOfBoundsException`。
+
+- **错误（Error）**：
+  - 系统错误，通常是不可恢复的，不建议捕获。
+  - 例如：`OutOfMemoryError`、`StackOverflowError`。
+
+#### 1.3 异常的继承体系
+
+- **`Throwable`**：所有异常和错误的超类。
+  - **`Exception`**：异常的超类。
+    - **`RuntimeException`**：运行时异常的超类。
+  - **`Error`**：错误的超类。
+
+**示意图：**
+
+```
+Throwable
+├── Exception
+│   ├── RuntimeException
+│   │   ├── NullPointerException
+│   │   ├── ArithmeticException
+│   │   └── ...
+│   ├── IOException
+│   ├── SQLException
+│   └── ...
+└── Error
+    ├── OutOfMemoryError
+    ├── StackOverflowError
+    └── ...
+```
+
+### 2. 异常处理机制
+
+#### 2.1 `try-catch`语句
+
+- **语法结构**：
+
+```java
+try {
+    // 可能发生异常的代码块
+} catch (ExceptionType1 e1) {
+    // 处理异常类型1的代码
+} catch (ExceptionType2 e2) {
+    // 处理异常类型2的代码
+} finally {
+    // 无论是否发生异常，都会执行的代码块（可选）
+}
+```
+
+- **示例代码**：
+
+```java
+public class ExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            int result = divide(10, 0);
+            System.out.println("结果：" + result);
+        } catch (ArithmeticException e) {
+            System.out.println("发生算术异常：" + e.getMessage());
+        } finally {
+            System.out.println("程序结束。");
+        }
+    }
+
+    public static int divide(int a, int b) {
+        return a / b;
+    }
+}
+```
+
+**输出：**
+
+```
+发生算术异常：/ by zero
+程序结束。
+```
+
+#### 2.2 `throws`关键字
+
+- **作用**：在方法声明中使用`throws`关键字，表示该方法可能抛出某种异常，调用者需要处理。
+
+- **示例代码**：
+
+```java
+public class ThrowsDemo {
+    public static void main(String[] args) {
+        try {
+            readFile("test.txt");
+        } catch (IOException e) {
+            System.out.println("发生IO异常：" + e.getMessage());
+        }
+    }
+
+    public static void readFile(String fileName) throws IOException {
+        FileReader reader = new FileReader(fileName);
+        // 读取文件内容
+        reader.close();
+    }
+}
+```
+
+#### 2.3 异常链
+
+- **概念**：在捕获异常后，抛出新的异常，并将原始异常作为新异常的原因，形成异常链。
+
+- **示例代码**：
+
+```java
+public class ExceptionChainDemo {
+    public static void main(String[] args) {
+        try {
+            methodA();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void methodA() throws Exception {
+        try {
+            methodB();
+        } catch (IOException e) {
+            throw new Exception("方法A发生异常", e);
+        }
+    }
+
+    public static void methodB() throws IOException {
+        throw new IOException("文件未找到");
+    }
+}
+```
+
+**输出：**
+
+```
+java.lang.Exception: 方法A发生异常
+    at ExceptionChainDemo.methodA(ExceptionChainDemo.java:11)
+    at ExceptionChainDemo.main(ExceptionChainDemo.java:5)
+Caused by: java.io.IOException: 文件未找到
+    at ExceptionChainDemo.methodB(ExceptionChainDemo.java:16)
+    at ExceptionChainDemo.methodA(ExceptionChainDemo.java:9)
+    ... 1 more
+```
+
+### 3. 自定义异常
+
+#### 3.1 创建自定义异常类
+
+- **步骤**：
+  - 定义一个继承自`Exception`或`RuntimeException`的类。
+  - 提供构造方法，调用父类构造方法。
+
+- **示例代码**：
+
+```java
+// 自定义异常类
+public class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
+}
+```
+
+#### 3.2 在程序中使用自定义异常
+
+- **示例代码**：
+
+```java
+public class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    // 取款方法，可能抛出自定义异常
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (amount > balance) {
+            throw new InsufficientFundsException("余额不足，无法取款！");
+        }
+        balance -= amount;
+        System.out.println("取款成功，当前余额：" + balance);
+    }
+
+    // 其他方法
+}
+
+// 测试类
+public class CustomExceptionDemo {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount(500);
+        try {
+            account.withdraw(600);
+        } catch (InsufficientFundsException e) {
+            System.out.println("捕获异常：" + e.getMessage());
+        }
+    }
+}
+```
+
+**输出：**
+
+```
+捕获异常：余额不足，无法取款！
+```
+
+### 4. 常见的异常类型
+
+- **`NullPointerException`**：空指针异常，当引用变量为`null`时，尝试调用其方法或属性。
+
+- **`ArrayIndexOutOfBoundsException`**：数组下标越界异常，当访问的数组索引超出范围。
+
+- **`ClassCastException`**：类型转换异常，当试图将对象强制转换为不兼容的类型。
+
+- **`NumberFormatException`**：数字格式异常，当尝试将字符串转换为数字，但字符串不符合数字格式。
+
+- **`IOException`**：IO异常，发生在文件操作、网络通信等IO操作中。
+
+**示例代码：**
+
+```java
+public class CommonExceptionDemo {
+    public static void main(String[] args) {
+        // NullPointerException
+        String str = null;
+        // System.out.println(str.length()); // 会抛出异常
+
+        // ArrayIndexOutOfBoundsException
+        int[] arr = new int[5];
+        // System.out.println(arr[5]); // 索引超出范围
+
+        // ClassCastException
+        Object obj = new Integer(100);
+        // String s = (String) obj; // 类型不兼容
+
+        // NumberFormatException
+        String numStr = "abc";
+        // int num = Integer.parseInt(numStr); // 字符串无法转换为数字
+    }
+}
+```
+
+### 5. 调试技巧
+
+#### 5.1 使用断点调试
+
+- **概念**：在代码中设置断点，程序运行到断点时会暂停，方便查看变量值和程序执行状态。
+
+- **步骤**：
+
+  1. **设置断点**：在IDE（如IntelliJ IDEA、Eclipse）中，点击代码行左侧的行号，添加断点。
+  
+  2. **启动调试模式**：以调试模式（Debug）运行程序。
+  
+  3. **查看变量值**：在调试窗口中，查看变量的当前值。
+  
+  4. **单步执行**：使用“步进”（Step Over）、“步入”（Step Into）等功能，逐行执行代码。
+
+#### 5.2 常用调试技巧
+
+- **观察变量变化**：在断点处，观察变量的值，判断程序是否按照预期运行。
+
+- **检查条件表达式**：验证条件判断是否正确，逻辑是否存在问题。
+
+- **追踪方法调用**：使用“步入”功能，进入方法内部，检查方法的执行过程。
+
+- **利用日志输出**：在代码中添加日志或`System.out.println()`，输出关键变量和流程信息。
+
+**示例代码：**
+
+```java
+public class DebugDemo {
+    public static void main(String[] args) {
+        int a = 5;
+        int b = 0;
+        int result = divide(a, b);
+        System.out.println("结果：" + result);
+    }
+
+    public static int divide(int x, int y) {
+        return x / y;
+    }
+}
+```
+
+- **调试步骤**：
+
+  1. 在`divide`方法中的`return`语句处设置断点。
+  
+  2. 启动调试模式，程序会在断点处暂停。
+  
+  3. 观察变量`x`和`y`的值，发现`y`为`0`，会导致`ArithmeticException`。
+  
+  4. 修改代码，添加对除数为零的检查。
+
+#### 5.3 使用调试工具的高级功能
+
+- **条件断点**：仅当某个条件满足时，断点才会生效。
+
+  - **设置方法**：在断点上右键，选择“条件”，输入条件表达式。
+  
+- **异常断点**：当程序抛出指定异常时，自动暂停。
+
+  - **设置方法**：在调试配置中，添加异常断点，指定异常类型。
+  
+- **观察表达式**：在调试过程中，添加表达式进行计算，观察结果。
+
+  - **使用场景**：动态计算变量的组合、函数的返回值等。
+
+### 6. 利用AI辅助工具进行调试
+
+- **代码分析**：使用AI工具自动分析代码，发现潜在的问题，如空指针、数组越界等。
+
+- **错误提示**：当代码中存在错误时，AI工具会提供详细的错误描述和解决建议。
+
+- **自动修复**：对于一些常见的错误，AI工具可以自动生成修复代码。
+
+**示例**：
+
+- 在IDE中，输入代码时，AI工具提示可能的异常情况。
+
+- 当程序抛出异常时，AI工具分析异常堆栈信息，定位问题所在。
+
+---
+
+## 三、实践环节
+
+### 1. 编写健壮的代码，处理异常
+
+**练习1**：编写一个读取文件内容的程序，要求：
+
+- 从指定文件中读取文本内容并输出。
+
+- 处理可能出现的异常，如文件未找到、IO异常等。
+
+- 在异常处理中，给出友好的提示信息。
+
+**示例代码：**
+
+```java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class FileReadDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("请输入文件路径：");
+        String filePath = scanner.nextLine();
+        BufferedReader reader = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            System.out.println("文件内容：");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("发生IO异常：" + e.getMessage());
+        } finally {
+            try {
+                if (reader != null) reader.close();
+            } catch (IOException e) {
+                System.out.println("关闭文件时发生异常：" + e.getMessage());
+            }
+        }
+    }
+}
+```
+
+### 2. 创建并使用自定义异常
+
+**练习2**：设计一个用户注册系统，要求：
+
+- 用户名必须为6-12位的字母和数字组合。
+
+- 密码长度必须大于等于8位。
+
+- 如果不符合要求，抛出自定义异常`InvalidUsernameException`和`InvalidPasswordException`。
+
+**步骤**：
+
+1. **定义自定义异常类**：
+
+   ```java
+   public class InvalidUsernameException extends Exception {
+       public InvalidUsernameException(String message) {
+           super(message);
+       }
+   }
+
+   public class InvalidPasswordException extends Exception {
+       public InvalidPasswordException(String message) {
+           super(message);
+       }
+   }
+   ```
+
+2. **编写注册方法**：
+
+   ```java
+   public class UserRegistration {
+       public void register(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+           if (!username.matches("[a-zA-Z0-9]{6,12}")) {
+               throw new InvalidUsernameException("用户名必须为6-12位的字母和数字组合");
+           }
+           if (password.length() < 8) {
+               throw new InvalidPasswordException("密码长度必须大于等于8位");
+           }
+           System.out.println("注册成功！");
+       }
+   }
+   ```
+
+3. **测试注册功能**：
+
+   ```java
+   import java.util.Scanner;
+
+   public class RegistrationDemo {
+       public static void main(String[] args) {
+           Scanner scanner = new Scanner(System.in);
+           UserRegistration registration = new UserRegistration();
+
+           System.out.print("请输入用户名：");
+           String username = scanner.nextLine();
+           System.out.print("请输入密码：");
+           String password = scanner.nextLine();
+
+           try {
+               registration.register(username, password);
+           } catch (InvalidUsernameException | InvalidPasswordException e) {
+               System.out.println("注册失败：" + e.getMessage());
+           }
+       }
+   }
+   ```
+
+### 3. 使用调试工具解决实际问题
+
+**练习3**：给定以下代码，程序运行后出现`NullPointerException`，请使用调试工具找出问题所在并修复。
+
+```java
+public class DebugExercise {
+    public static void main(String[] args) {
+        String[] names = {"Alice", "Bob", "Charlie", null, "David"};
+        for (int i = 0; i <= names.length; i++) {
+            System.out.println(names[i].toUpperCase());
+        }
+    }
+}
+```
+
+**调试步骤**：
+
+1. **设置断点**：在`for`循环内部，`System.out.println()`语句处设置断点。
+
+2. **运行调试**：以调试模式运行程序，程序在断点处暂停。
+
+3. **观察变量**：查看变量`i`和`names[i]`的值。
+
+4. **发现问题**：
+
+   - 当`i`为3时，`names[3]`为`null`，调用`toUpperCase()`方法会抛出`NullPointerException`。
+
+   - 当`i`为5时，`i <= names.length`，`i`取值为5，`names[5]`超出数组范围，抛出`ArrayIndexOutOfBoundsException`。
+
+5. **修复代码**：
+
+   - 修改循环条件为`i < names.length`。
+
+   - 在输出前，增加`null`值检查。
+
+**修复后的代码**：
+
+```java
+public class DebugExercise {
+    public static void main(String[] args) {
+        String[] names = {"Alice", "Bob", "Charlie", null, "David"};
+        for (int i = 0; i < names.length; i++) {
+            if (names[i] != null) {
+                System.out.println(names[i].toUpperCase());
+            } else {
+                System.out.println("姓名为空");
+            }
+        }
+    }
+}
+```
+
+---
+
+## 四、综合练习
+
+### 开发一个简单的命令行计算器（综合应用异常处理和调试技巧）
+
+**功能要求**：
+
+- 支持基本的算术运算：加、减、乘、除。
+
+- 从命令行读取用户输入的表达式进行计算，例如：`2 + 3`。
+
+- 对用户的输入进行验证，处理可能的异常情况，如格式错误、除数为零等。
+
+**技术要点**：
+
+- **异常处理**：
+
+  - 捕获可能的`ArithmeticException`、`NumberFormatException`等异常。
+
+  - 提供友好的错误提示，要求用户重新输入。
+
+- **调试技巧**：
+
+  - 使用调试工具，确保程序逻辑正确。
+
+  - 处理特殊情况，如连续输入多次运算符、输入空值等。
+
+**实现步骤**：
+
+1. **设计程序结构**：
+
+   - 创建一个`Calculator`类，包含计算方法。
+
+   - 在`main`方法中，循环读取用户输入，进行计算。
+
+2. **处理用户输入**：
+
+   - 使用`Scanner`读取整行输入。
+
+   - 使用正则表达式或字符串拆分，解析操作数和运算符。
+
+3. **实现计算逻辑**：
+
+   - 根据运算符，执行对应的运算。
+
+   - 注意除法时的除数为零的情况。
+
+4. **添加异常处理**：
+
+   - 捕获并处理可能的异常，提示用户错误信息。
+
+   - 在异常处理后，允许用户重新输入。
+
+5. **测试程序**：
+
+   - 进行各种输入测试，确保程序稳定运行。
+
+**示例代码**：
+
+```java
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("欢迎使用简易计算器（输入 'exit' 退出）");
+
+        while (true) {
+            System.out.print("请输入计算表达式（如 2 + 3）：");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("计算器已退出。");
+                break;
+            }
+
+            try {
+                // 解析输入
+                String[] tokens = input.trim().split("\\s+");
+                if (tokens.length != 3) {
+                    throw new IllegalArgumentException("输入格式错误，应为：操作数 运算符 操作数");
+                }
+
+                double num1 = Double.parseDouble(tokens[0]);
+                String operator = tokens[1];
+                double num2 = Double.parseDouble(tokens[2]);
+
+                double result = calculate(num1, num2, operator);
+                System.out.println("结果：" + result);
+
+            } catch (NumberFormatException e) {
+                System.out.println("数字格式错误：" + e.getMessage());
+            } catch (ArithmeticException e) {
+                System.out.println("算术错误：" + e.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.out.println("输入错误：" + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("发生未知错误：" + e.getMessage());
+            }
+        }
+    }
+
+    public static double calculate(double a, double b, String op) {
+        switch (op) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                if (b == 0) {
+                    throw new ArithmeticException("除数不能为零");
+                }
+                return a / b;
+            default:
+                throw new IllegalArgumentException("不支持的运算符：" + op);
+        }
+    }
+}
+```
+
+**测试用例**：
+
+- 输入：`10 + 5`，输出：`结果：15.0`
+
+- 输入：`8 / 0`，输出：`算术错误：除数不能为零`
+
+- 输入：`a * 2`，输出：`数字格式错误：For input string: "a"`
+
+- 输入：`2 ^ 3`，输出：`输入错误：不支持的运算符：^`
+
+---
+
+## 五、练习与作业
+
+### 1. 编写异常处理的练习程序
+
+- **任务**：编写一个程序，从用户输入的整数数组中，计算指定位置的元素值。
+
+- **要求**：
+
+  - 捕获并处理可能的异常，如`ArrayIndexOutOfBoundsException`、`InputMismatchException`。
+
+  - 在发生异常时，提示用户错误信息，并允许重新输入。
+
+- **提示**：使用`try-catch`语句，循环读取用户输入。
+
+### 2. 设计自定义异常应用场景
+
+- **任务**：模拟银行转账功能，要求：
+
+  - 定义自定义异常`InsufficientBalanceException`，表示余额不足。
+
+  - 当转账金额大于账户余额时，抛出异常并处理。
+
+  - 编写测试用例，验证异常的抛出和处理。
+
+### 3. 使用调试工具分析代码
+
+- **任务**：给定一段有逻辑错误的代码，使用调试工具找出问题并修复。
+
+- **代码示例**：
+
+  ```java
+  public class LogicErrorDemo {
+      public static void main(String[] args) {
+          int[] numbers = {1, 2, 3, 4, 5};
+          int sum = 0;
+          for (int i = 0; i <= numbers.length; i++) {
+              sum += numbers[i];
+          }
+          System.out.println("总和：" + sum);
+      }
+  }
+  ```
+
+- **要求**：找出数组下标越界的问题，修改代码，正确计算数组元素的和。
+
+---
+
+## 六、课堂讨论
+
+- **为什么需要异常处理机制？异常处理对程序的健壮性有何影响？**
+
+- **在什么情况下需要自定义异常？自定义异常应遵循哪些设计原则？**
+
+- **调试技巧在实际开发中有多重要？如何高效地使用调试工具？**
+
+---
+
+## 七、学习建议
+
+- **主动实践**：多编写代码，练习异常处理和调试技巧。
+
+- **善于总结**：在解决问题后，总结经验和教训，避免类似错误。
+
+- **深入理解**：理解异常的工作原理，而不仅仅是机械地添加`try-catch`。
+
+- **利用工具**：熟练使用IDE的调试功能，提高问题解决效率。
+
+---
+
+## 八、预习与准备
+
+- **预习下周内容**：多线程与并发编程
+
+- **思考问题**：
+
+  - 什么是线程？多线程编程有哪些优势和挑战？
+
+  - 如何解决线程安全问题？有哪些常用的同步机制？
+
+---
+
+**备注**：本周内容重点在于掌握异常处理和调试技巧，编写健壮可靠的代码。通过实践和综合练习，培养解决问题的能力，为后续复杂的编程任务做好准备。
